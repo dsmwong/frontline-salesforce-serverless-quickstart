@@ -2,6 +2,8 @@ const sfdcAuthenticatePath = Runtime.getFunctions()['auth/sfdc-authenticate'].pa
 const { sfdcAuthenticate } = require(sfdcAuthenticatePath);
 
 exports.handler = async function (context, event, callback) {
+
+  console.log(`Event: ${JSON.stringify(event, null, 2)}`);
   let response = new Twilio.Response();
   response.appendHeader('Content-Type', 'application/json');
   try {
@@ -69,7 +71,9 @@ const getCustomerDetailsByCustomerIdCallback = async (contactId, connection) => 
           Name: 1,
           Title: 1,
           MobilePhone: 1,
+          Email: 1,
           'Account.Name': 1,
+          SMS_Opt_In__c: 1,
         }
       )
       .limit(1)
@@ -83,6 +87,8 @@ const getCustomerDetailsByCustomerIdCallback = async (contactId, connection) => 
   const accountName = (
     sfdcRecord.Account ? sfdcRecord.Account.Name : 'Unknown Company'
   );
+
+  const optIn = (sfdcRecord.SMS_Opt_In__c) ? '✅' : '🛑'
 
   return {
     objects: {
@@ -103,9 +109,21 @@ const getCustomerDetailsByCustomerIdCallback = async (contactId, connection) => 
             value: sfdcRecord.Email
           }
         ],
+        links: [
+          {
+            type: "Salesforce Contact Record",
+            value: `salesforce1://sObject/${sfdcRecord.Id}/view`,
+            display_name: `${sfdcRecord.Name}`,
+          },
+        ],
         details: {
           title: "Information",
-          content: `${accountName} - ${sfdcRecord.Title}`
+          content: `${accountName} - ${sfdcRecord.Title}` +
+          "\n\n" +
+          // `Event Attendance : ${sfdcRecord.Event_Attendance__c}` +
+          // "\n" +
+          `SMS Opt In : ${optIn}` +
+          "\n"
         }
       }
     }

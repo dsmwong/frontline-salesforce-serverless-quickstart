@@ -1,0 +1,333 @@
+Frontline user identity: dawong+frontline@twilio.com
+Auth error:  INVALID_SESSION_ID: Session expired or invalid
+    at HttpApi.getError (/Users/dawong/dev/source/github/twilio-labs/frontline-salesforce-serverless-quickstart/node_modules/jsforce/lib/http-api.js:250:13)
+    at /Users/dawong/dev/source/github/twilio-labs/frontline-salesforce-serverless-quickstart/node_modules/jsforce/lib/http-api.js:95:22
+    at tryCallOne (/Users/dawong/dev/source/github/twilio-labs/frontline-salesforce-serverless-quickstart/node_modules/promise/lib/core.js:37:12)
+    at /Users/dawong/dev/source/github/twilio-labs/frontline-salesforce-serverless-quickstart/node_modules/promise/lib/core.js:123:15
+    at flush (/Users/dawong/dev/source/github/twilio-labs/frontline-salesforce-serverless-quickstart/node_modules/asap/raw.js:50:29)
+    at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+  errorCode: 'INVALID_SESSION_ID'
+}
+Error: Request failed with status code 400
+    at createError (/Users/dawong/dev/source/github/twilio-labs/frontline-salesforce-serverless-quickstart/node_modules/axios/lib/core/createError.js:16:15)
+    at settle (/Users/dawong/dev/source/github/twilio-labs/frontline-salesforce-serverless-quickstart/node_modules/axios/lib/core/settle.js:17:12)
+    at IncomingMessage.handleStreamEnd (/Users/dawong/dev/source/github/twilio-labs/frontline-salesforce-serverless-quickstart/node_modules/axios/lib/adapters/http.js:322:11)
+    at IncomingMessage.emit (node:events:525:35)
+    at endReadableNT (node:internal/streams/readable:1358:12)
+    at processTicksAndRejections (node:internal/process/task_queues:83:21) {
+  config: {
+    transitional: {
+      silentJSONParsing: true,
+      forcedJSONParsing: true,
+      clarifyTimeoutError: false
+    },
+    adapter: [Function: httpAdapter],
+    transformRequest: [ [Function: transformRequest] ],
+    transformResponse: [ [Function: transformResponse] ],
+    timeout: 0,
+    xsrfCookieName: 'XSRF-TOKEN',
+    xsrfHeaderName: 'X-XSRF-TOKEN',
+    maxContentLength: -1,
+    maxBodyLength: -1,
+    validateStatus: [Function: validateStatus],
+    headers: {
+      Accept: 'application/json, text/plain, */*',
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'User-Agent': 'axios/0.26.1',
+      'Content-Length': 725
+    },
+    method: 'post',
+    url: 'https://login.salesforce.com/services/oauth2/token',
+    data: 'grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIzTVZHOXd0NElMNE81d3ZMdXIwTkI5NjdXTm9ZX3g2cVVlZHhneENjMEdUc0JZaU9PeXRXMDdFcjh0LnVabURycWFTUGoub1hqZllpclNtUG0zMlFIIiwiYXVkIjoiaHR0cHM6Ly9sb2dpbi5zYWxlc2ZvcmNlLmNvbSIsInBybiI6ImRhd29uZytmcm9udGxpbmVAdHdpbGlvLmNvbSIsImV4cCI6MTY2MzkwODc5MCwiaWF0IjoxNjYzOTA4NjEwfQ.AdWIHFubpCES6XNEauwbMSS3OVRnmomFQ_QbTIfHLNvTA9lls1oggvXBSytHhmnlAROOroyFB_P7fIHteEQA5ysu2R_SPJLQo-4Pxmr5UeCiCWGXaaOZfYarBz6wiVeFfOP5WFLqRSR0mqgrHtZXcdo_uEDJiejGZjufj-YEFy_FoJU-U6f3WqJRB7ehZVbc4VIfmbmBkvbcjhl6V_beSg4Q_-disDjT78atSqZh99vHH4WIc6VKD6cCiHt7NAzbftG0tynUBXi-UgSz4EUxzd-7uW_vgrzu4DtbZ0cgTPEgqYvStQbPZiN1pc661V4Q7pjwtBusVEKTmS8cYY01Iw'
+  },
+  request: <ref *1> ClientRequest {
+    _events: [Object: null prototype] {
+      abort: [Function (anonymous)],
+      aborted: [Function (anonymous)],
+      connect: [Function (anonymous)],
+      error: [Function (anonymous)],
+      socket: [Function (anonymous)],
+      timeout: [Function (anonymous)],
+      prefinish: [Function: requestOnPrefinish]
+    },
+    _eventsCount: 7,
+    _maxListeners: undefined,
+    outputData: [],
+    outputSize: 0,
+    writable: true,
+    destroyed: false,
+    _last: true,
+    chunkedEncoding: false,
+    shouldKeepAlive: false,
+    maxRequestsOnConnectionReached: false,
+    _defaultKeepAlive: true,
+    useChunkedEncodingByDefault: true,
+    sendDate: false,
+    _removedConnection: false,
+    _removedContLen: false,
+    _removedTE: false,
+    _contentLength: null,
+    _hasBody: true,
+    _trailer: '',
+    finished: true,
+    _headerSent: true,
+    _closed: false,
+    socket: TLSSocket {
+      _tlsOptions: [Object],
+      _secureEstablished: true,
+      _securePending: false,
+      _newSessionPending: false,
+      _controlReleased: true,
+      secureConnecting: false,
+      _SNICallback: null,
+      servername: 'login.salesforce.com',
+      alpnProtocol: false,
+      authorized: true,
+      authorizationError: null,
+      encrypted: true,
+      _events: [Object: null prototype],
+      _eventsCount: 10,
+      connecting: false,
+      _hadError: false,
+      _parent: null,
+      _host: 'login.salesforce.com',
+      _readableState: [ReadableState],
+      _maxListeners: undefined,
+      _writableState: [WritableState],
+      allowHalfOpen: false,
+      _sockname: null,
+      _pendingData: null,
+      _pendingEncoding: '',
+      server: undefined,
+      _server: null,
+      ssl: [TLSWrap],
+      _requestCert: true,
+      _rejectUnauthorized: true,
+      parser: null,
+      _httpMessage: [Circular *1],
+      [Symbol(res)]: [TLSWrap],
+      [Symbol(verified)]: true,
+      [Symbol(pendingSession)]: null,
+      [Symbol(async_id_symbol)]: 133,
+      [Symbol(kHandle)]: [TLSWrap],
+      [Symbol(lastWriteQueueSize)]: 0,
+      [Symbol(timeout)]: null,
+      [Symbol(kBuffer)]: null,
+      [Symbol(kBufferCb)]: null,
+      [Symbol(kBufferGen)]: null,
+      [Symbol(kCapture)]: false,
+      [Symbol(kSetNoDelay)]: false,
+      [Symbol(kSetKeepAlive)]: true,
+      [Symbol(kSetKeepAliveInitialDelay)]: 60,
+      [Symbol(kBytesRead)]: 0,
+      [Symbol(kBytesWritten)]: 0,
+      [Symbol(connect-options)]: [Object],
+      [Symbol(RequestTimeout)]: undefined
+    },
+    _header: 'POST /services/oauth2/token HTTP/1.1\r\n' +
+      'Accept: application/json, text/plain, */*\r\n' +
+      'Content-Type: application/x-www-form-urlencoded\r\n' +
+      'User-Agent: axios/0.26.1\r\n' +
+      'Content-Length: 725\r\n' +
+      'Host: login.salesforce.com\r\n' +
+      'Connection: close\r\n' +
+      '\r\n',
+    _keepAliveTimeout: 0,
+    _onPendingData: [Function: nop],
+    agent: Agent {
+      _events: [Object: null prototype],
+      _eventsCount: 2,
+      _maxListeners: undefined,
+      defaultPort: 443,
+      protocol: 'https:',
+      options: [Object: null prototype],
+      requests: [Object: null prototype] {},
+      sockets: [Object: null prototype],
+      freeSockets: [Object: null prototype] {},
+      keepAliveMsecs: 1000,
+      keepAlive: false,
+      maxSockets: Infinity,
+      maxFreeSockets: 256,
+      scheduling: 'lifo',
+      maxTotalSockets: Infinity,
+      totalSocketCount: 1,
+      maxCachedSessions: 100,
+      _sessionCache: [Object],
+      [Symbol(kCapture)]: false
+    },
+    socketPath: undefined,
+    method: 'POST',
+    maxHeaderSize: undefined,
+    insecureHTTPParser: undefined,
+    path: '/services/oauth2/token',
+    _ended: true,
+    res: IncomingMessage {
+      _readableState: [ReadableState],
+      _events: [Object: null prototype],
+      _eventsCount: 4,
+      _maxListeners: undefined,
+      socket: [TLSSocket],
+      httpVersionMajor: 1,
+      httpVersionMinor: 1,
+      httpVersion: '1.1',
+      complete: true,
+      rawHeaders: [Array],
+      rawTrailers: [],
+      aborted: false,
+      upgrade: false,
+      url: '',
+      method: null,
+      statusCode: 400,
+      statusMessage: 'Bad Request',
+      client: [TLSSocket],
+      _consuming: true,
+      _dumped: false,
+      req: [Circular *1],
+      responseUrl: 'https://login.salesforce.com/services/oauth2/token',
+      redirects: [],
+      [Symbol(kCapture)]: false,
+      [Symbol(kHeaders)]: [Object],
+      [Symbol(kHeadersCount)]: 24,
+      [Symbol(kTrailers)]: null,
+      [Symbol(kTrailersCount)]: 0,
+      [Symbol(RequestTimeout)]: undefined
+    },
+    aborted: false,
+    timeoutCb: null,
+    upgradeOrConnect: false,
+    parser: null,
+    maxHeadersCount: null,
+    reusedSocket: false,
+    host: 'login.salesforce.com',
+    protocol: 'https:',
+    _redirectable: Writable {
+      _writableState: [WritableState],
+      _events: [Object: null prototype],
+      _eventsCount: 3,
+      _maxListeners: undefined,
+      _options: [Object],
+      _ended: true,
+      _ending: true,
+      _redirectCount: 0,
+      _redirects: [],
+      _requestBodyLength: 725,
+      _requestBodyBuffers: [],
+      _onNativeResponse: [Function (anonymous)],
+      _currentRequest: [Circular *1],
+      _currentUrl: 'https://login.salesforce.com/services/oauth2/token',
+      [Symbol(kCapture)]: false
+    },
+    [Symbol(kCapture)]: false,
+    [Symbol(kNeedDrain)]: false,
+    [Symbol(corked)]: 0,
+    [Symbol(kOutHeaders)]: [Object: null prototype] {
+      accept: [Array],
+      'content-type': [Array],
+      'user-agent': [Array],
+      'content-length': [Array],
+      host: [Array]
+    },
+    [Symbol(kUniqueHeaders)]: null
+  },
+  response: {
+    status: 400,
+    statusText: 'Bad Request',
+    headers: {
+      date: 'Fri, 23 Sep 2022 04:50:10 GMT',
+      'set-cookie': [Array],
+      'strict-transport-security': 'max-age=63072000; includeSubDomains',
+      'x-content-type-options': 'nosniff',
+      'x-xss-protection': '1; mode=block',
+      'cache-control': 'no-cache,must-revalidate,max-age=0,no-store,private',
+      expires: 'Thu, 01 Jan 1970 00:00:00 GMT',
+      'content-type': 'application/json;charset=UTF-8',
+      'transfer-encoding': 'chunked',
+      connection: 'close'
+    },
+    config: {
+      transitional: [Object],
+      adapter: [Function: httpAdapter],
+      transformRequest: [Array],
+      transformResponse: [Array],
+      timeout: 0,
+      xsrfCookieName: 'XSRF-TOKEN',
+      xsrfHeaderName: 'X-XSRF-TOKEN',
+      maxContentLength: -1,
+      maxBodyLength: -1,
+      validateStatus: [Function: validateStatus],
+      headers: [Object],
+      method: 'post',
+      url: 'https://login.salesforce.com/services/oauth2/token',
+      data: 'grant_type=urn%3Aietf%3Aparams%3Aoauth%3Agrant-type%3Ajwt-bearer&assertion=eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiIzTVZHOXd0NElMNE81d3ZMdXIwTkI5NjdXTm9ZX3g2cVVlZHhneENjMEdUc0JZaU9PeXRXMDdFcjh0LnVabURycWFTUGoub1hqZllpclNtUG0zMlFIIiwiYXVkIjoiaHR0cHM6Ly9sb2dpbi5zYWxlc2ZvcmNlLmNvbSIsInBybiI6ImRhd29uZytmcm9udGxpbmVAdHdpbGlvLmNvbSIsImV4cCI6MTY2MzkwODc5MCwiaWF0IjoxNjYzOTA4NjEwfQ.AdWIHFubpCES6XNEauwbMSS3OVRnmomFQ_QbTIfHLNvTA9lls1oggvXBSytHhmnlAROOroyFB_P7fIHteEQA5ysu2R_SPJLQo-4Pxmr5UeCiCWGXaaOZfYarBz6wiVeFfOP5WFLqRSR0mqgrHtZXcdo_uEDJiejGZjufj-YEFy_FoJU-U6f3WqJRB7ehZVbc4VIfmbmBkvbcjhl6V_beSg4Q_-disDjT78atSqZh99vHH4WIc6VKD6cCiHt7NAzbftG0tynUBXi-UgSz4EUxzd-7uW_vgrzu4DtbZ0cgTPEgqYvStQbPZiN1pc661V4Q7pjwtBusVEKTmS8cYY01Iw'
+    },
+    request: <ref *1> ClientRequest {
+      _events: [Object: null prototype],
+      _eventsCount: 7,
+      _maxListeners: undefined,
+      outputData: [],
+      outputSize: 0,
+      writable: true,
+      destroyed: false,
+      _last: true,
+      chunkedEncoding: false,
+      shouldKeepAlive: false,
+      maxRequestsOnConnectionReached: false,
+      _defaultKeepAlive: true,
+      useChunkedEncodingByDefault: true,
+      sendDate: false,
+      _removedConnection: false,
+      _removedContLen: false,
+      _removedTE: false,
+      _contentLength: null,
+      _hasBody: true,
+      _trailer: '',
+      finished: true,
+      _headerSent: true,
+      _closed: false,
+      socket: [TLSSocket],
+      _header: 'POST /services/oauth2/token HTTP/1.1\r\n' +
+        'Accept: application/json, text/plain, */*\r\n' +
+        'Content-Type: application/x-www-form-urlencoded\r\n' +
+        'User-Agent: axios/0.26.1\r\n' +
+        'Content-Length: 725\r\n' +
+        'Host: login.salesforce.com\r\n' +
+        'Connection: close\r\n' +
+        '\r\n',
+      _keepAliveTimeout: 0,
+      _onPendingData: [Function: nop],
+      agent: [Agent],
+      socketPath: undefined,
+      method: 'POST',
+      maxHeaderSize: undefined,
+      insecureHTTPParser: undefined,
+      path: '/services/oauth2/token',
+      _ended: true,
+      res: [IncomingMessage],
+      aborted: false,
+      timeoutCb: null,
+      upgradeOrConnect: false,
+      parser: null,
+      maxHeadersCount: null,
+      reusedSocket: false,
+      host: 'login.salesforce.com',
+      protocol: 'https:',
+      _redirectable: [Writable],
+      [Symbol(kCapture)]: false,
+      [Symbol(kNeedDrain)]: false,
+      [Symbol(corked)]: 0,
+      [Symbol(kOutHeaders)]: [Object: null prototype],
+      [Symbol(kUniqueHeaders)]: null
+    },
+    data: {
+      error: 'invalid_grant',
+      error_description: "user hasn't approved this consumer"
+    }
+  },
+  isAxiosError: true,
+  toJSON: [Function: toJSON]
+}
+TypeError: Cannot read properties of undefined (reading 'access_token')
+    at exports.sfdcAuthenticate (/Users/dawong/dev/source/github/twilio-labs/frontline-salesforce-serverless-quickstart/functions/auth/sfdc-authenticate.private.js:25:40)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async exports.handler (/Users/dawong/dev/source/github/twilio-labs/frontline-salesforce-serverless-quickstart/functions/crm.protected.js:13:38)
+500 POST /crm │ Response Type application/json; charset=utf-8

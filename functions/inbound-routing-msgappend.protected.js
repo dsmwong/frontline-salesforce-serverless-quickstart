@@ -4,6 +4,7 @@ const { sfdcAuthenticate } = require(sfdcAuthenticatePath);
 const OPTOUT_MESSAGE = ' - https://spt.bt/A6Jx8p to opt out';
 
 exports.handler = async function (context, event, callback) {
+    console.log('Entered ', context.PATH);
     const twilioClient = context.getTwilioClient();
     let response = new Twilio.Response();
     response.appendHeader('Content-Type', 'application/json');
@@ -45,9 +46,80 @@ exports.handler = async function (context, event, callback) {
             console.log(`Message Body ${event.Body}`);
             if( isOutgoingMessage )
             {
-                response.setBody({ body: `${event.Body} ${OPTOUT_MESSAGE}`});
+                response = { body: `${event.Body} ${OPTOUT_MESSAGE}`}
             }
             //return callback(null, { body: `${event.Body} ${OPTOUT_MESSAGE}`});
+            break;
+        } case 'onConversationAdded':
+        case 'onConversationStateUpdated':
+        case 'onParticipantUpdated': {
+            console.log('Event type: ', event.EventType);
+            console.log('Event payload: ', JSON.stringify(event, null,2));
+            break;
+        }
+        case 'onConversationUpdated': {
+            console.log('Event type: ', event.EventType);
+            console.log('Event payload: ', JSON.stringify(event, null,2));
+
+            const sfdcConnectionIdentity = await sfdcAuthenticate(context, null); // this is null due to no user context, default to env. var SF user
+            const { connection } = sfdcConnectionIdentity;
+
+            // find the customer participant
+            const convParticipants = await twilioClient.conversations.conversations(conversationSid).participants.list();
+            console.log('Participants: ', JSON.stringify(convParticipants, null,2));
+            
+            // assume customer participant is when identity is null
+            const customerParticipant = convParticipants.find((p) => p.identity === null)
+            console.log('Customer Participants: ', customerParticipant);
+            const custAttribute = JSON.parse(customerParticipant.attributes);
+
+            const agentParticipant = convParticipants.find((p) => p.identity !== null)
+            console.log('Agent Participants: ', agentParticipant);
+
+
+            if( event.Attributes && event.State === "active") {
+
+                // Active conversation, update the customer record with call status
+                console.log('Event Attributes: ', JSON.stringify(JSON.parse(event.Attributes), null,2));
+                const attributes = JSON.parse(event.Attributes);
+
+                const frontlineEvents = attributes["frontline.events"]
+                const latestFrontlineEvent = frontlineEvents[(frontlineEvents.length-1)]
+
+                console.log('Latest Frontline Event: ', latestFrontlineEvent);
+                const direction = latestFrontlineEvent.inbound ? "Inbound" : "Outbound"
+                
+                // Write the Call interaction to SFDC
+                const taskResult = await connection.sobject("Task").create({
+                    ActivityDate: new Date(),
+                    CallType: direction,
+                    Type: "Call",
+                    TaskSubType: "Call",
+                    CallDurationInSeconds: latestFrontlineEvent.duration,
+                    Description: `Conversation SID: ${conversationSid}\nCall with ${agentParticipant.identity} to ${custAttribute.display_name}`,
+                    Status: "Completed",
+                    Subject: `${direction} Call Completed with ${agentParticipant.identity}`,
+                    WhoId: custAttribute.customer_id,
+                }); 
+                console.log('Task Result: ', taskResult);
+            } else if (event.State === "closed") {
+                console.log('Conversation Closed');
+
+                // Write the SMS Conversation to SFDC when conversation is closed
+
+                const messages = await twilioClient.conversations.conversations(conversationSid).messages.list();
+                console.log('Messages: ', JSON.stringify(messages, null,2));
+                const conversationString = messages.map((m) => `[${m.author}] ${m.body}`).join("\n");
+                
+                const taskResult = await connection.sobject("Task").create({
+                    ActivityDate: new Date(),
+                    Description: `Conversation SID: ${conversationSid}\nEnded Conversation with ${event.FriendlyName}\n\n${conversationString}`,
+                    Status: "Completed",
+                    Subject: `Closing Conversation with ${event.FriendlyName}`,
+                    WhoId: custAttribute.customer_id,
+                }); 
+                console.log('Close Conversation Task Result: ', taskResult);
+            }
             break;
         } default: {
             console.log('Unknown event type: ', event.EventType);

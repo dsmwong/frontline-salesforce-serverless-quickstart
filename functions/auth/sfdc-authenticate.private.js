@@ -20,14 +20,21 @@ exports.sfdcAuthenticate = async (context, worker) => {
     } catch (e) {
         console.log('Auth error: ', e);
         if ((e.status === 404 && e.code === 20404) || e.errorCode === 'INVALID_SESSION_ID') {
+            console.log('No tokens found in Sync, requesting new ones');
             const newTokens = await signJwtAndRequestNewTokens(context, salesforceUsername);
-            const connection = new jsforce.Connection({
+            console.log('New tokens received ' + newTokens.access_token + 
+                        ' full payload' + JSON.stringify(newTokens) + 
+                        ' for URL_INSTANCE ' + context.SFDC_INSTANCE_URL);
+            const connection2 = new jsforce.Connection({
                 accessToken: newTokens.access_token,
                 instanceUrl: context.SFDC_INSTANCE_URL
             });
-            const identityInfo = await connection.identity();
-            await updateTokenCache(context, twilioClient, connection, identityInfo);
-            return { connection, identityInfo }
+            const identityInfo = await connection2.identity();
+            console.log('IdentityInfo received ' + JSON.stringify(identityInfo));
+            await updateTokenCache(context, twilioClient, connection2, identityInfo);
+            return { connection2, identityInfo }
+        } else {
+            console.error('Unknown error occurred');
         }
     }
 };
@@ -55,6 +62,7 @@ const signJwtAndRequestNewTokens = async (context, salesforceUsername) => {
         const newTokens = response.data;
         return newTokens;
     } catch (e) {
+        console.error('Error requesting new tokens: ', e);
         console.error(e);
     }
 };
