@@ -5,6 +5,7 @@ var querystring = require('querystring');
 
 exports.sfdcAuthenticate = async (context, worker) => {
     const salesforceUsername = worker ? worker : context.SF_USERNAME;
+    console.log(`Authenticating ${salesforceUsername}...`);
     const twilioClient = context.getTwilioClient();
     try {
         const syncDoc = await twilioClient.sync

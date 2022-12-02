@@ -11,6 +11,7 @@ exports.handler = async function (context, event, callback) {
     const customerNumber = (event['MessagingBinding.Address'] && event['MessagingBinding.Address'].startsWith('whatsapp:'))
         ? event['MessagingBinding.Address'].substring(9)
         : event['MessagingBinding.Address'];
+    const workerNumber = event['WorkerBinding.ProxyAddress'];
     const conversationSid = event.ConversationSid;
     switch (event.EventType) {
         case 'onConversationAdded': {
@@ -88,7 +89,17 @@ exports.handler = async function (context, event, callback) {
 
                 console.log('Latest Frontline Event: ', latestFrontlineEvent);
                 const direction = latestFrontlineEvent.inbound ? "Inbound" : "Outbound"
-                
+
+                const fromNumber = latestFrontlineEvent.inbound ? customerNumber : workerNumber
+                const toNumber = latestFrontlineEvent.inbound ? workerNumber : customerNumber
+
+                const [lastCall, ...x] = await twilioClient.calls.list({from: fromNumber, to: toNumber, limit: 1});
+                console.log('Last Call: ', lastCall);
+
+                const parentCallSid = lastCall.parentCallSid;
+                const recordings = await twilioClient.recordings.list({callSid: parentCallSid});
+                console.log('Recordings: ', recordings);
+
                 // Write the Call interaction to SFDC
                 const taskResult = await connection.sobject("Task").create({
                     ActivityDate: new Date(),
@@ -96,7 +107,7 @@ exports.handler = async function (context, event, callback) {
                     Type: "Call",
                     TaskSubType: "Call",
                     CallDurationInSeconds: latestFrontlineEvent.duration,
-                    Description: `Conversation SID: ${conversationSid}\nCall with ${agentParticipant.identity} to ${custAttribute.display_name}`,
+                    Description: `Call SID: ${lastCall.sid}\nConversation SID: ${conversationSid}\nCall with ${agentParticipant.identity} to ${custAttribute.display_name}\nCall Recording: ${recordings[0].sid}`,
                     Status: "Completed",
                     Subject: `${direction} Call Completed with ${agentParticipant.identity}`,
                     WhoId: custAttribute.customer_id,
