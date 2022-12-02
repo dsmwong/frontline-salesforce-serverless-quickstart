@@ -111,6 +111,8 @@ exports.handler = async function (context, event, callback) {
                     Status: "Completed",
                     Subject: `${direction} Call Completed with ${agentParticipant.identity}`,
                     WhoId: custAttribute.customer_id,
+                    // Custom Fields
+                    "Recording__c": recordings[0].sid
                 }); 
                 console.log('Task Result: ', taskResult);
             } else if (event.State === "closed") {
